@@ -106,16 +106,32 @@ def intento(letra,arg,arranque):
                     descifrando = palabra[0] + ' ' + (' _ '  * (palabra.index(x)-1)) + x + (' _ '  * ((len(palabra) -2) - palabra.index(x))) + ' ' + palabra[-1]
                     return descifrando
         for x in palabra[1:-1]:
-            if x == letra:
+            if x == letra and palabra.count(x) == 1:
                 w = palabra.index(x)
                 k = [y for y in arg.split()]
                 if k[w] == '_':
                     k[w] = letra
-                    return ''.join(k)
-                #for x in k[w]:
-                #    if x == '_':
-                #        arg = arg.replace('_',letra,1)
-                #        return arg
+                    return ' '.join(k)
+            elif x == letra and palabra.count(x) > 1:
+                w = palabra.index(x)
+                k = [y for y in arg.split()]
+                if k[w] == '_':
+                    k[w] = letra
+                    z = w + 1 
+                    prox = palabra[z::]
+                    for y in prox:
+                        if y == letra:
+                            q = prox.index(y) + len(palabra[0:z])
+                            k[q] = letra                            
+                            if palabra.count(x) > 2:
+                                q1 = q + 1
+                                proxr = palabra[q1::]
+                                for y1 in proxr:
+                                    if y1 == letra:
+                                        q2 = proxr.index(y1) + len(palabra[0:q1])
+                                        k[q2] = letra
+                                        return ' '.join(k)    
+                            return ' '.join(k)
                         
         return 0
         
