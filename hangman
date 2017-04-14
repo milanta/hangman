@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Apr  9 15:54:44 2017
+
+@author: agustin
+"""
+
+import random
+import os
+
+images = ['''
+     _________
+    |         |
+    |         
+    |        
+    |        
+    |
+    |
+          
+''','''
+     _________
+    |         |
+    |         0
+    |        
+    |        
+    |
+    |
+    
+OOPS!! Esa letra no esta! Proba otra vez!
+''','''
+     _________
+    |         |
+    |         0
+    |         |
+    |         
+    |
+    |
+''','''    
+     _________
+    |         |
+    |         0
+    |        /|
+    |         
+    |
+    |
+''','''    
+     _________
+    |         |
+    |         0
+    |        /|\\
+    |         
+    |
+    |
+''','''    
+     _________
+    |         |
+    |         0
+    |        /|\\
+    |        / 
+    |
+    |
+''','''    
+     _________
+    |         |
+    |         0
+    |        /|\\
+    |        / \\
+    |
+    |
+''']
+
+palabras = ['Otorrinolaringologo','Desoxirribonucleico', 'Electrocardiograma','Electrodomestico', 'Paralelepipedo']
+
+def elegirpalabra():
+    ran = random.randint(0,4)
+    palabra = palabras[ran]
+    return palabra
+    
+def palabracifrada(arg):
+    conv = len(arg[1:-1])
+    rep = ' _ ' * conv
+    acertijo = arg[0] + rep + arg[-1]
+    return acertijo
+
+def imagen(errores):
+    if errores == 0:
+        return images[0]
+    elif errores == 1:
+        return images[1]
+    elif errores == 2:
+        return images[2]
+    elif errores == 3:
+        return images[3]
+    elif errores == 4:
+        return images[4]
+    elif errores == 5:
+        return images[5]
+    else:
+        return images[6] + '\n' + 'GAME OVER' + '\n' + 'La palabra era: ' + palabra + '\n'
+
+def intento(letra,arg,arranque):
+        if arranque == 1:
+            for x in palabra[1:-1]:
+                if x == letra:
+                    descifrando = palabra[0] + ' ' + (' _ '  * (palabra.index(x)-1)) + x + (' _ '  * ((len(palabra) -2) - palabra.index(x))) + ' ' + palabra[-1]
+                    return descifrando
+        for x in palabra[1:-1]:
+            if x == letra:
+                w = palabra.index(x)
+                k = [y for y in arg.split()]
+                if k[w] == '_':
+                    k[w] = letra
+                    return ''.join(k)
+                #for x in k[w]:
+                #    if x == '_':
+                #        arg = arg.replace('_',letra,1)
+                #        return arg
+                        
+        return 0
+        
+
+
+palabra = elegirpalabra()
+#f = open('palabra.tmp','w')
+#f.
+    
+cifrado = palabracifrada(palabra)
+
+
+#transitiva = ''
+
+
+errores = 0
+arranque = 1
+    
+    
+while errores <= 6:
+    if arranque == 1:
+        os.system('clear')
+        print('\n')
+        print(cifrado)
+        print(imagen(errores))
+        letra = input('Elegi una letra: ')
+        transitiva = intento(letra,cifrado,arranque)
+        arranque -= 1
+    else:    
+        os.system('clear')
+        print('\n')
+        print(transitiva)
+        print(imagen(errores))    
+        if errores < 6:
+            print('Te quedan ' + str(6 - errores) + ' intentos')
+        elif errores == 6:
+            imagen(errores)
+            break
+        print('\n')
+        letra = input('Elegi una letra: ')
+        if intento(letra,transitiva,0) == 0:
+            errores += 1
+        else:
+            momentanea = intento(letra,transitiva,0)
+            transitiva = str(momentanea)
+        
+
+
+
+
