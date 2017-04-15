@@ -140,6 +140,14 @@ def intento(letra,arg,arranque):
                                                 if y2 == letra:
                                                     q4 = proxr1.index(y2) + len(palabra[0:q3])
                                                     k[q4] = letra
+                                                    if palabra.count(x) > 3:
+                                                        q5 = q4 + 1
+                                                        proxr2 = palabra[q5::]
+                                                        for y3 in proxr2:
+                                                            if y3 == letra:
+                                                                q6 = proxr2.index(y3) + len(palabra[0:q5])
+                                                                k[q6] = letra
+                                                                return '  '.join(k)
                                                     return '  '.join(k) 
                                         return '  '.join(k)
                             return '  '.join(k)
@@ -177,6 +185,14 @@ def intento(letra,arg,arranque):
                                                 if y2 == letra:
                                                     q4 = proxr1.index(y2) + len(palabra[0:q3])
                                                     k[q4] = letra
+                                                    if palabra.count(x) > 3:
+                                                        q5 = q4 + 1
+                                                        proxr2 = palabra[q5::]
+                                                        for y3 in proxr2:
+                                                            if y3 == letra:
+                                                                q6 = proxr2.index(y3) + len(palabra[0:q5])
+                                                                k[q6] = letra
+                                                                return '  '.join(k)
                                                     return '  '.join(k) 
                                         return '  '.join(k)    
                             return '  '.join(k)
