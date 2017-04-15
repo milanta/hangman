@@ -8,6 +8,7 @@ Created on Sun Apr  9 15:54:44 2017
 
 import random
 import os
+import time
 
 images = ['''
      _________
@@ -17,7 +18,8 @@ images = ['''
     |        
     |
     |
-          
+    |
+____|____     
 ''','''
      _________
     |         |
@@ -26,8 +28,7 @@ images = ['''
     |        
     |
     |
-    
-OOPS!! Esa letra no esta! Proba otra vez!
+____|____    
 ''','''
      _________
     |         |
@@ -36,6 +37,7 @@ OOPS!! Esa letra no esta! Proba otra vez!
     |         
     |
     |
+____|____
 ''','''    
      _________
     |         |
@@ -44,6 +46,7 @@ OOPS!! Esa letra no esta! Proba otra vez!
     |         
     |
     |
+____|____
 ''','''    
      _________
     |         |
@@ -52,6 +55,7 @@ OOPS!! Esa letra no esta! Proba otra vez!
     |         
     |
     |
+____|____
 ''','''    
      _________
     |         |
@@ -60,6 +64,7 @@ OOPS!! Esa letra no esta! Proba otra vez!
     |        / 
     |
     |
+____|____
 ''','''    
      _________
     |         |
@@ -68,6 +73,7 @@ OOPS!! Esa letra no esta! Proba otra vez!
     |        / \\
     |
     |
+____|____
 ''']
 
 palabras = ['Otorrinolaringologo','Desoxirribonucleico', 'Electrocardiograma','Electrodomestico', 'Paralelepipedo']
@@ -103,15 +109,16 @@ def intento(letra,arg,arranque):
         if arranque == 1:
             for x in palabra[1:-1]:
                 if x == letra:
-                    descifrando = palabra[0] + ' ' + (' _ '  * (palabra.index(x)-1)) + x + (' _ '  * ((len(palabra) -2) - palabra.index(x))) + ' ' + palabra[-1]
+                    descifrando =  palabra[0] + ' ' + (' _ '  * (palabra.index(x)-1)) + x + (' _ '  * ((len(palabra) -2) - palabra.index(x))) + ' ' + palabra[-1]
                     return descifrando
+            return arg
         for x in palabra[1:-1]:
             if x == letra and palabra.count(x) == 1:
                 w = palabra.index(x)
                 k = [y for y in arg.split()]
-                if k[w] == '_':
+                if k[w] == '_' :
                     k[w] = letra
-                    return ' '.join(k)
+                    return '  '.join(k)
             elif x == letra and palabra.count(x) > 1:
                 w = palabra.index(x)
                 k = [y for y in arg.split()]
@@ -130,8 +137,8 @@ def intento(letra,arg,arranque):
                                     if y1 == letra:
                                         q2 = proxr.index(y1) + len(palabra[0:q1])
                                         k[q2] = letra
-                                        return ' '.join(k)    
-                            return ' '.join(k)
+                                        return '  '.join(k)    
+                            return '  '.join(k)
                         
         return 0
         
@@ -154,11 +161,26 @@ arranque = 1
 while errores <= 6:
     if arranque == 1:
         os.system('clear')
+        print('\n  \n  \n  \n  \n  \n  \n               Comenzamos!! :D')
+        time.sleep(1)
+        os.system('clear')
+        print('\n  \n  \n  \n  \n  \n  \n                    3')
+        time.sleep(1)
+        os.system('clear')
+        print('\n  \n  \n  \n  \n  \n  \n                    2')
+        time.sleep(1)
+        os.system('clear')
+        print('\n  \n  \n  \n  \n  \n  \n                    1')
+        time.sleep(1)
+        os.system('clear')
         print('\n')
         print(cifrado)
         print(imagen(errores))
         letra = input('Elegi una letra: ')
         transitiva = intento(letra,cifrado,arranque)
+        if transitiva == cifrado:
+            errores += 1
+            arranque -= 1
         arranque -= 1
     else:    
         os.system('clear')
