@@ -105,13 +105,46 @@ def imagen(errores):
     else:
         return images[6] + '\n' + 'GAME OVER' + '\n' + 'La palabra era: ' + palabra + '\n'
 
+def ganaste(palabra,transitiva):
+    r = ' '.join(palabra)
+    if r == transitiva:
+        return 1
+
 def intento(letra,arg,arranque):
         if arranque == 1:
             for x in palabra[1:-1]:
                 if x == letra:
                     descifrando =  palabra[0] + ' ' + (' _ '  * (palabra.index(x)-1)) + x + (' _ '  * ((len(palabra) -2) - palabra.index(x))) + ' ' + palabra[-1]
-                    return descifrando
+                    k = [y for y in descifrando.split()]
+                    if palabra.count(x) == 1:
+                        w = palabra.index(x)
+                        k[w] == letra
+                        return descifrando
+                    w = palabra.index(x) + 1
+                    prox = palabra[w::]
+                    for x in prox:
+                        if x == letra:
+                            q = prox.index(x) + len(palabra[0:w])
+                            k[q] = letra
+                            if palabra.count(x) >= 2:
+                                q1 = q + 1
+                                proxr = palabra[q1::]
+                                for y1 in proxr:
+                                    if y1 == letra:
+                                        q2 = proxr.index(y1) + len(palabra[0:q1])
+                                        k[q2] = letra
+                                        if palabra.count(x) > 2:
+                                            q3 = q1 + 1
+                                            proxr1 = palabra[q3::]
+                                            for y2 in proxr1:
+                                                if y2 == letra:
+                                                    q4 = proxr1.index(y2) + len(palabra[0:q3])
+                                                    k[q4] = letra
+                                                    return '  '.join(k) 
+                                        return '  '.join(k)
+                            return '  '.join(k)
             return arg
+        
         for x in palabra[1:-1]:
             if x == letra and palabra.count(x) == 1:
                 w = palabra.index(x)
@@ -130,13 +163,21 @@ def intento(letra,arg,arranque):
                         if y == letra:
                             q = prox.index(y) + len(palabra[0:z])
                             k[q] = letra                            
-                            if palabra.count(x) > 2:
+                            if palabra.count(x) >= 2:
                                 q1 = q + 1
                                 proxr = palabra[q1::]
                                 for y1 in proxr:
                                     if y1 == letra:
                                         q2 = proxr.index(y1) + len(palabra[0:q1])
                                         k[q2] = letra
+                                        if palabra.count(x) > 2:
+                                            q3 = q1 + 1
+                                            proxr1 = palabra[q3::]
+                                            for y2 in proxr1:
+                                                if y2 == letra:
+                                                    q4 = proxr1.index(y2) + len(palabra[0:q3])
+                                                    k[q4] = letra
+                                                    return '  '.join(k) 
                                         return '  '.join(k)    
                             return '  '.join(k)
                         
@@ -145,21 +186,17 @@ def intento(letra,arg,arranque):
 
 
 palabra = elegirpalabra()
-#f = open('palabra.tmp','w')
-#f.
-    
+
 cifrado = palabracifrada(palabra)
 
-
-#transitiva = ''
-
-
 errores = 0
-arranque = 1
-    
-    
+
+arranque = 1    
+
+
 while errores <= 6:
     if arranque == 1:
+        '''
         os.system('clear')
         print('\n  \n  \n  \n  \n  \n  \n               Comenzamos!! :D')
         time.sleep(1)
@@ -172,6 +209,7 @@ while errores <= 6:
         os.system('clear')
         print('\n  \n  \n  \n  \n  \n  \n                    1')
         time.sleep(1)
+        '''
         os.system('clear')
         print('\n')
         print(cifrado)
@@ -197,9 +235,12 @@ while errores <= 6:
         if intento(letra,transitiva,0) == 0:
             errores += 1
         else:
+            if ganaste(palabra,transitiva) == 1:
+                break
             momentanea = intento(letra,transitiva,0)
             transitiva = str(momentanea)
-        
+
+     
 
 
 
