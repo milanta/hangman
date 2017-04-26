@@ -85,8 +85,8 @@ def elegirpalabra():
     
 def palabracifrada(arg):
     conv = len(arg[1:-1])
-    rep = ' _ ' * conv
-    acertijo = arg[0] + rep + arg[-1]
+    rep = ' _' * conv
+    acertijo = arg[0] + rep + ' ' + arg[-1]
     return acertijo
 
 def imagen(errores):
@@ -105,61 +105,16 @@ def imagen(errores):
     else:
         return images[6] 
 
-def ganaste(palabra,transitiva):
-    t1 = transitiva.replace("  ","")
-    if t1 == palabra:
-        return 1
 
-def intento(letra,arg,arranque):
-        if arranque == 1:
-            for x in palabra[1:-1]:
-                if x == letra:
-                    descifrando =  palabra[0] + ' ' + (' _ '  * (palabra.index(x)-1)) + x + (' _ '  * ((len(palabra) -2) - palabra.index(x))) + ' ' + palabra[-1]
-                    k = [y for y in descifrando.split()]
-                    if palabra.count(x) == 1:
-                        w = palabra.index(x)
-                        k[w] == letra
-                        return descifrando
-                    w = palabra.index(x) + 1
-                    prox = palabra[w::]
-                    for x in prox:
-                        if x == letra:
-                            q = prox.index(x) + len(palabra[0:w])
-                            k[q] = letra
-                            if palabra.count(x) >= 2:
-                                q1 = q + 1
-                                proxr = palabra[q1::]
-                                for y1 in proxr:
-                                    if y1 == letra:
-                                        q2 = proxr.index(y1) + len(palabra[0:q1])
-                                        k[q2] = letra
-                                        if palabra.count(x) > 2:
-                                            q3 = q1 + 1
-                                            proxr1 = palabra[q3::]
-                                            for y2 in proxr1:
-                                                if y2 == letra:
-                                                    q4 = proxr1.index(y2) + len(palabra[0:q3])
-                                                    k[q4] = letra
-                                                    if palabra.count(x) > 3:
-                                                        q5 = q4 + 1
-                                                        proxr2 = palabra[q5::]
-                                                        for y3 in proxr2:
-                                                            if y3 == letra:
-                                                                q6 = proxr2.index(y3) + len(palabra[0:q5])
-                                                                k[q6] = letra
-                                                                return '  '.join(k)
-                                                    return '  '.join(k) 
-                                        return '  '.join(k)
-                            return '  '.join(k)
-            return arg
-        
-        for x in palabra[1:-1]:
+def intento(letra,arg):
+
+    for x in palabra[1:-1]:
             if x == letra and palabra.count(x) == 1:
                 w = palabra.index(x)
                 k = [y for y in arg.split()]
                 if k[w] == '_' :
                     k[w] = letra
-                    return '  '.join(k)
+                    return ' '.join(k)
             elif x == letra and palabra.count(x) > 1:
                 w = palabra.index(x)
                 k = [y for y in arg.split()]
@@ -192,12 +147,11 @@ def intento(letra,arg,arranque):
                                                             if y3 == letra:
                                                                 q6 = proxr2.index(y3) + len(palabra[0:q5])
                                                                 k[q6] = letra
-                                                                return '  '.join(k)
-                                                    return '  '.join(k) 
-                                        return '  '.join(k)    
-                            return '  '.join(k)
+                                                                return ' '.join(k)
+                                                    return ' '.join(k) 
+                                        return ' '.join(k)    
+                            return ' '.join(k)
                         
-        return 0
         
 
 
@@ -212,7 +166,6 @@ arranque = 1
 
 while errores <= 6:
     if arranque == 1:
-        '''
         os.system('clear')
         print('\n  \n  \n  \n  \n  \n  \n               Comenzamos!! :D')
         time.sleep(1)
@@ -225,17 +178,18 @@ while errores <= 6:
         os.system('clear')
         print('\n  \n  \n  \n  \n  \n  \n                    1')
         time.sleep(1)
-        '''
         os.system('clear')
         print('\n')
         print(cifrado)
         print(imagen(errores))
         letra = input('Elegi una letra: ')
-        transitiva = intento(letra,cifrado,arranque)
-        if transitiva == cifrado:
+        transitiva = intento(letra,cifrado)
+        if transitiva == None:
             errores += 1
             arranque -= 1
-        arranque -= 1
+            transitiva = cifrado
+        else:
+            arranque -= 1
     else:    
         os.system('clear')
         print('\n')
@@ -251,14 +205,14 @@ while errores <= 6:
         elif errores == 6:
             imagen(errores)
             print('\n' + 'GAME OVER' + '\n' + 'La palabra era: ' + palabra + '\n')
-            print('Aciertos:', len(set(transitiva.replace("  ",""))) - transitiva.replace("  ","").count('-') - 3)
+            print('Puntaje:', len(set(transitiva.replace("  ",""))) - transitiva.replace("  ","").count('-') - 3)
             break
         print('\n')
         letra = input('Elegi una letra: ')
-        if intento(letra,transitiva,0) == 0:
+        if intento(letra,transitiva) == None:
             errores += 1
         else:
-            momentanea = intento(letra,transitiva,0)
+            momentanea = intento(letra,transitiva)
             transitiva = str(momentanea)
 
      
